@@ -1,9 +1,17 @@
 <link rel="stylesheet" href="main.css">
 <div><h1> 수 화(手 花) </h1></div>
+
 <div id="webcam-container"></div>
 <div id="label-container"></div>
+<div>
+  <div id="gameexplaition"></div>
+  <div id="gameexplaition2"></div>
+  <div id="gameexplaition3"></div>
+</div>
+
+
 <button class="btn btn-3" onclick="init()">게임시작</button>
-<button class="btn btn-5">게임방법</button>
+<button class="btn btn-5" onclick="game_explaition()">게임방법</button>
 
 
 <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
@@ -15,9 +23,15 @@
     // the link to your model provided by Teachable Machine export panel
     const URL = "./";
 
-    let model, webcam, labelContainer, maxPredictions;
+    let model, webcam, labelContainer, maxPredictions, explain;
 
     // Load the image model and setup the webcam
+    async function game_explaition(){
+      document.getElementById("gameexplaition").innerHTML = "1.게임시작을 누르면 카메라와 문제 종류가 나옵니다."
+      document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제를 고르고 클릭을 하면 그의 맞는 문제가 나옵니다."
+      document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 표현하게되면 정답/오답 으로 표현되고 다음 문제로 넘어갑니다."
+    }
+
     async function init() {
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
