@@ -11,6 +11,31 @@ body {
   text-transform: uppercase;
 }
 
+#left{
+  width: 50%;
+  height: 500px;
+  float: left;
+}
+
+#right{
+  text-align: left;
+  width: 50%;
+  height: 500px;
+  float: left;
+}
+
+#gameexplaition{
+  margin-bottom: 10px;
+}
+
+#gameexplaition2{
+  margin-bottom: 10px;
+}
+
+#gameexplaition3{
+  margin-bottom: 10px;
+}
+
 h1 {
   margin: 3em 0 2em;
 }
