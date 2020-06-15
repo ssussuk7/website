@@ -18,6 +18,7 @@ body {
   height: 60px;
 }
 #left{
+  margin-top: 20px;
   width: 48%;
   height: 500px;
   float: left;
@@ -25,6 +26,7 @@ body {
 }
 
 #right{
+  margin-top: 20px;
   text-align: left;
   width: 50%;
   height: 500px;
@@ -32,7 +34,7 @@ body {
 }
 
 #gameexplaition{
-  margin-top: 20px;
+
   margin-bottom: 10px;
   margin-left: 10px;
   font-size: 1.5em
