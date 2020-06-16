@@ -176,7 +176,7 @@
 
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = prediction[0].className + ": " + prediction[0].probability.toFixed(2);
+        const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
         document.getElementById("gameexplaition4").innerHTML = classPrediction;
 
     }
