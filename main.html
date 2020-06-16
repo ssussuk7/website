@@ -135,6 +135,25 @@
       Menu2.appendChild( Menu2Text );
 
       document.getElementById("gameexplaition").appendChild( Menu2 );
+      Menu2.addEventListener('click', function(event){
+
+        const modelURL = URL + "model_consonant.json";
+        const metadataURL = URL + "metadata_consonant.json";
+
+        Qus_number = Math.floor(Math.random() * 14) + 10;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
 
       var Menu3 = document.createElement( 'button' );
       Menu3.className = 'Menu3class';
@@ -202,11 +221,12 @@
 
     //게임방법
     async function game_explaition(){
-      document.getElementById("gameexplaition").innerHTML = "1.게임시작을 누르면 카메라와 문제 종류가 나옵니다.";
-      document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제를 고르고 클릭을 하면 그의 맞는 문제가 나옵니다.";
-      document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 표현하게되면 정답/오답 으로 표현되고 다음 문제로 넘어갑니다.";
-      document.getElementById("gameexplaition4").innerHTML = "";
-      document.getElementById("gameexplaition5").innerHTML = "";
+      document.getElementById("webcam-container").innerHTML = "";
+      document.getElementById("gameexplaition").innerHTML = "1.'게임시작'을 누르면 카메라와 문제 종류가 나옵니다.";
+      document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제 종류를 클릭하면 문제가 나옵니다.";
+      document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 입력하면 됩니다.";
+      document.getElementById("gameexplaition4").innerHTML = "4.정답이면 카메라가 멈춘 후 점수가 1점 추가됩니다. 다음 문제는 다시 '게임시작'을 누른 후 문제 종류를 클릭하시면 됩니다. ";
+      document.getElementById("gameexplaition5").innerHTML = "5.오답이면 카메라가 멈춘 후 점수가 1점 감점됩니다.";
     }
 
     //전체리셋
@@ -216,6 +236,7 @@
 
     //문제정답
     async function question_answer(){
+      document.getElementById("webcam-container").innerHTML = "";
       document.getElementById("gameexplaition").innerHTML = "";
       document.getElementById("gameexplaition2").innerHTML = "";
       document.getElementById("gameexplaition3").innerHTML = "";
