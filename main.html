@@ -98,7 +98,7 @@
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
 
 
-    var Qus_number = Math.floor(Math.random() * 10)
+
     //게임시작
     async function init() {
       document.getElementById("gameexplaition").innerHTML = "";
@@ -106,6 +106,8 @@
       document.getElementById("gameexplaition3").innerHTML = "";
       document.getElementById("gameexplaition4").innerHTML = "";
       document.getElementById("gameexplaition5").innerHTML = "";
+
+      var Qus_number = Math.floor(Math.random() * 3)
 
       var Menu1 = document.createElement( 'button' );
       Menu1.className = 'Menu1class';
@@ -122,7 +124,7 @@
 
 
         document.getElementById("gameexplaition2").innerHTML = categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?";
-        window.requestAnimationFrame(loop_quiz);
+        window.requestAnimationFrame(loop_quiz(Qus_number));
 
       })
 
@@ -170,15 +172,15 @@
         window.requestAnimationFrame(loop);
     }
 
-    async function loop_quiz(){
+    async function loop_quiz(number){
       webcam.update();
-      await predict();
+      await predict(number);
       window.requestAnimationFrame(loop_quiz);
     }
 
-    async function predict() {
+    async function predict(num) {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = prediction[1].className + ": " + prediction[1].probability.toFixed(2);
+        const classPrediction = prediction[num].className + ": " + prediction[num].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition4").innerHTML = classPrediction;
 
     }
