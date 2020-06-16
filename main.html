@@ -175,7 +175,7 @@
     async function loop_quiz(number){
       webcam.update();
       await predict(number);
-      window.requestAnimationFrame(loop_quiz);
+      window.requestAnimationFrame(loop_quiz(number));
     }
 
     async function predict(num) {
