@@ -142,7 +142,7 @@
 
         model = await tmImage.load(modelURL, metadataURL);
 
-        Qus_number = Math.floor(Math.random() * 14) + 10;
+        Qus_number = Math.floor(Math.random() * 15);
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
@@ -150,7 +150,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_consonant[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
