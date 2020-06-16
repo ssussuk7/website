@@ -185,13 +185,33 @@
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
           webcam = false;
+          Score = Score + 1
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
           const image = new Image();
           image.src = './image/' +Qus_number+ '.jpg';
           image.style.width = '100px';
           image.style.height = '100px';
           document.getElementById("gameexplaition5").append(categories_number[Qus_number] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
+
+          var Menu_next = document.createElement( 'button' );
+          Menu_next.className = 'Menu_nextclass';
+          var Menu_next_Text = document.createTextNode( '다음문제' );
+          Menu_next.appendChild(Menu_next_Text);
+          document.getElementById("gameexplaition5").appendChild( Menu_next );
+          Menu_next.addEventListener('click', function(event){
+
+            document.getElementById("gameexplaition2").innerHTML = "";
+            document.getElementById("gameexplaition3").innerHTML = "";
+            document.getElementById("gameexplaition4").innerHTML = "";
+            document.getElementById("gameexplaition5").innerHTML = "";
+
+
+            document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
+            window.requestAnimationFrame(loop_quiz);
+            webcam = true;
+          }
         }
 
     }
