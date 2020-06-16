@@ -182,6 +182,7 @@
         const prediction = await model.predict(webcam.canvas);
         const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
+
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
           window.requestAnimationFrame(loop);
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
@@ -191,6 +192,7 @@
           image.style.height = '100px';
           document.getElementById("gameexplaition5").append(categories_number[Qus_number] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
+          break;
         }
 
     }
