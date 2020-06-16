@@ -1,9 +1,23 @@
+<!Doctype html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Sign language Game</title>
+</head>
+
 <link rel="stylesheet" href="main.css">
 <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap" rel="stylesheet">
+
+<body>
 
 
 <style media="screen">
   h1{
+    font-family: 'Nanum Myeongjo', serif;
+  }
+  h2{
     font-family: 'Nanum Myeongjo', serif;
   }
 
@@ -18,7 +32,15 @@
 </style>
 
 
-<div id="title"><h1> 수 화(手 花) </h1></div>
+<div id="title">
+  <div class="">
+      <h1> 수 화(手 花) </h1>
+  </div>
+  <div class="">
+    <h2>손으로 표현하다.</h2>
+  </div>
+
+</div>
 
 <div class="main">
   <div id="left">
@@ -30,6 +52,8 @@
     <div id="gameexplaition"></div>
     <div id="gameexplaition2"></div>
     <div id="gameexplaition3"></div>
+    <div id="gameexplaition4"></div>
+    <div id="gameexplaition5"></div>
     <div id="question_"></div>
     <div id="answer"></div>
   </div>
@@ -74,12 +98,14 @@
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
 
 
-
+    var Qus_number = Math.floor(Math.random() * 10)
     //게임시작
     async function init() {
       document.getElementById("gameexplaition").innerHTML = "";
       document.getElementById("gameexplaition2").innerHTML = "";
       document.getElementById("gameexplaition3").innerHTML = "";
+      document.getElementById("gameexplaition4").innerHTML = "";
+      document.getElementById("gameexplaition5").innerHTML = "";
 
       var Menu1 = document.createElement( 'button' );
       Menu1.className = 'Menu1class';
@@ -89,7 +115,18 @@
       document.getElementById("gameexplaition").appendChild( Menu1 );
 
       Menu1.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
 
+
+        document.getElementById("gameexplaition2").innerHTML = categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?";
+        window.requestAnimationFrame(loop);
+
+        const classPrediction =
+            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        labelContainer.childNodes[i].innerHTML = classPrediction;
       })
 
       var Menu2 = document.createElement( 'button' );
@@ -116,10 +153,6 @@
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
-        // load the model and metadata
-        // Refer to tmImage.loadFromFiles() in the API to support files from a file picker
-        // or files from your local hard drive
-        // Note: the pose library adds "tmImage" object to your window (window.tmImage)
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
@@ -132,25 +165,20 @@
 
         // append elements to the DOM
         document.getElementById("webcam-container").appendChild(webcam.canvas);
-        labelContainer = document.getElementById("label-container");
-        for (let i = 0; i < maxPredictions; i++) { // and class labels
-            labelContainer.appendChild(document.createElement("div"));
+
         }
-    }
+
     async function loop() {
-        webcam.update(); // update the webcam frame
+        webcam.update();
         await predict();
         window.requestAnimationFrame(loop);
     }
-    // run the webcam image through the image model
+
     async function predict() {
-        // predict can take in an image, video or canvas html element
         const prediction = await model.predict(webcam.canvas);
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
+        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2);
+        document.getElementById("gameexplaition4").innerHTML = classPrediction;
+
     }
 
 
@@ -159,6 +187,8 @@
       document.getElementById("gameexplaition").innerHTML = "1.게임시작을 누르면 카메라와 문제 종류가 나옵니다.";
       document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제를 고르고 클릭을 하면 그의 맞는 문제가 나옵니다.";
       document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 표현하게되면 정답/오답 으로 표현되고 다음 문제로 넘어갑니다.";
+      document.getElementById("gameexplaition4").innerHTML = "";
+      document.getElementById("gameexplaition5").innerHTML = "";
     }
 
     //전체리셋
@@ -171,23 +201,47 @@
       document.getElementById("gameexplaition").innerHTML = "";
       document.getElementById("gameexplaition2").innerHTML = "";
       document.getElementById("gameexplaition3").innerHTML = "";
+      document.getElementById("gameexplaition4").innerHTML = "";
+      document.getElementById("gameexplaition5").innerHTML = "";
 
       var Menu1 = document.createElement( 'button' );
       Menu1.className = 'Menu1class';
       var Menu1Text = document.createTextNode( '1.숫자' );
       Menu1.appendChild( Menu1Text );
 
+
+
       document.getElementById("gameexplaition").appendChild( Menu1 );
 
       Menu1.addEventListener('click', function(event){
         document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
         for (var i = 0; i < categories_number.length; i++) {
+          if (i ==5) {
+            break;
+          }
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
           image.style.width = '100px';
           image.style.height = '100px';
           document.getElementById("gameexplaition2").append(categories_number[i] + ".")
           document.getElementById("gameexplaition2").appendChild(image);
+        }
+
+        for (var i = 5; i < categories_number.length; i++) {
+          if (i ==10) {
+            break;
+          }
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+          document.getElementById("gameexplaition3").append(categories_number[i] + ".")
+          document.getElementById("gameexplaition3").appendChild(image);
         }
       })
 
@@ -200,7 +254,14 @@
 
       Menu2.addEventListener('click', function(event){
         document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
         for (var i = 10; i < 10 + categories_consonant.length; i++) {
+          if (i == 15) {
+            break;
+          }
 
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
@@ -210,7 +271,32 @@
           document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition2").appendChild(image);
         }
-      })
+
+      for (var i = 15; i < 10 + categories_consonant.length; i++) {
+        if (i == 20) {
+          break;
+        }
+
+        const image = new Image();
+        image.src = './image/' +i+ '.jpg';
+        image.style.width = '100px';
+        image.style.height = '100px';
+
+        document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
+        document.getElementById("gameexplaition3").appendChild(image);
+      }
+
+    for (var i = 20; i < 10 + categories_consonant.length; i++) {
+
+      const image = new Image();
+      image.src = './image/' +i+ '.jpg';
+      image.style.width = '100px';
+      image.style.height = '100px';
+
+      document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
+      document.getElementById("gameexplaition4").appendChild(image);
+    }
+  })
 
       var Menu3 = document.createElement( 'button' );
       Menu3.className = 'Menu3class';
@@ -218,6 +304,65 @@
       Menu3.appendChild( Menu3Text );
 
       document.getElementById("gameexplaition").appendChild( Menu3 );
+
+      Menu3.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+        for (var i = 24; i < 24 + categories_vowel.length; i++) {
+          if (i == 29) {
+            break;
+          }
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+
+        for (var i = 29; i < 24 + categories_vowel.length; i++) {
+          if (i == 34) {
+            break;
+          }
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition3").appendChild(image);
+        }
+
+        for (var i = 34; i < 24 + categories_vowel.length; i++) {
+          if (i == 39) {
+            break;
+          }
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition4").appendChild(image);
+        }
+
+        for (var i = 39; i < 24 + categories_vowel.length; i++) {
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition5").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition5").appendChild(image);
+        }
+      })
 
       var Menu4 = document.createElement( 'button' );
       Menu4.className = 'Menu4class';
@@ -230,3 +375,5 @@
 
 
 </script>
+</body>
+</html>
