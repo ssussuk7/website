@@ -167,17 +167,11 @@
         }
 
     async function loop() {
-      if(webcam = false){
-        window.cancelAnimationFrame(loop);
-      }
         webcam.update();
         window.requestAnimationFrame(loop);
     }
 
     async function loop_quiz(){
-      if(webcam = false){
-        window.cancelAnimationFrame(loop_quiz);
-      }
       webcam.update();
       await predict();
       window.requestAnimationFrame(loop_quiz);
@@ -208,6 +202,11 @@
           Menu_next.appendChild(Menu_next_Text);
           document.getElementById("gameexplaition5").appendChild( Menu_next );
           Menu_next.addEventListener('click', function(event){
+            const flip = true;
+            webcam = new tmImage.Webcam(400, 400, flip);
+            await webcam.setup();
+            await webcam.play();
+            window.requestAnimationFrame(loop);
 
             document.getElementById("gameexplaition2").innerHTML = "";
             document.getElementById("gameexplaition3").innerHTML = "";
