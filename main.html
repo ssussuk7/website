@@ -200,8 +200,7 @@
     }
 
     async function predict() {
-
-        const prediction = await model.predict(webcam.canvas);
+        const prediction =  model.predict(webcam.canvas);
         const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
