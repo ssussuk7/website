@@ -135,12 +135,12 @@
       Menu2.appendChild( Menu2Text );
 
       document.getElementById("gameexplaition").appendChild( Menu2 );
-      Menu2.addEventListener('click', function(event){
+      Menu2.addEventListener('click', async function(event){
 
         const modelURL = URL + "model_consonant.json";
         const metadataURL = URL + "metadata_consonant.json";
 
-        model = tmImage.load(modelURL, metadataURL);
+        model = await tmImage.load(modelURL, metadataURL);
 
         Qus_number = Math.floor(Math.random() * 15);
 
@@ -200,7 +200,7 @@
     }
 
     async function predict() {
-        const prediction =  model.predict(webcam.canvas);
+        const prediction = await model.predict(webcam.canvas);
         const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
