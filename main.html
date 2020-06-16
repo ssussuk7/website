@@ -113,7 +113,11 @@
 
       document.getElementById("gameexplaition").appendChild( Menu1 );
 
-      Menu1.addEventListener('click', function(event){
+      Menu1.addEventListener('click',async function(event){
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
 
         Qus_number = Math.floor(Math.random() * 10);
 
@@ -137,10 +141,10 @@
       document.getElementById("gameexplaition").appendChild( Menu2 );
       Menu2.addEventListener('click', async function(event){
 
-        const modelURL = URL + "model_consonant.json";
-        const metadataURL = URL + "metadata_consonant.json";
+        const modelURL_con = URL + "model_consonant.json";
+        const metadataURL_con = URL + "metadata_consonant.json";
 
-        model = await tmImage.load(modelURL, metadataURL);
+        model = await tmImage.load(modelURL_con, metadataURL_con);
 
         Qus_number = Math.floor(Math.random() * 15);
 
@@ -171,10 +175,7 @@
 
       document.getElementById("gameexplaition").appendChild( Menu4 );
 
-        const modelURL = URL + "model.json";
-        const metadataURL = URL + "metadata.json";
 
-        model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
         const flip = true;
