@@ -184,7 +184,7 @@
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
-          webcam = False;
+          webcam = false;
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
           const image = new Image();
           image.src = './image/' +Qus_number+ '.jpg';
