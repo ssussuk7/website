@@ -192,6 +192,7 @@
           image.src = './image/' +Qus_number+ '.jpg';
           image.style.width = '100px';
           image.style.height = '100px';
+
           document.getElementById("gameexplaition5").append(categories_number[Qus_number] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
 
@@ -207,10 +208,10 @@
             document.getElementById("gameexplaition4").innerHTML = "";
             document.getElementById("gameexplaition5").innerHTML = "";
 
-
+            webcam = true;
             document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
             window.requestAnimationFrame(loop_quiz);
-            webcam = true;
+
           })
         }
 
