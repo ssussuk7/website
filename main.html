@@ -81,7 +81,7 @@
 
     const URL = "./";
 
-    let model, webcam, labelContainer, maxPredictions, explain, Qus_number;
+    let model, webcam, labelContainer, maxPredictions, explain, Qus_number, Qus_consonant, Qus_vewel, Score;
 
     var categories_All = ["0","1","2","3","4","5","6","7","8","9",
               "10","11","12","13","14","15","16","17","18","19","20","21","22","23",
@@ -113,6 +113,7 @@
       document.getElementById("gameexplaition").appendChild( Menu1 );
 
       Menu1.addEventListener('click', function(event){
+        Score = 0;
         Qus_number = Math.floor(Math.random() * 3);
 
         document.getElementById("gameexplaition2").innerHTML = "";
@@ -123,6 +124,7 @@
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
       })
 
@@ -153,14 +155,13 @@
         model = await tmImage.load(modelURL, metadataURL);
         maxPredictions = model.getTotalClasses();
 
-        // Convenience function to setup a webcam
-        const flip = true; // whether to flip the webcam
-        webcam = new tmImage.Webcam(400, 400, flip); // width, height, flip
-        await webcam.setup(); // request access to the webcam
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
         await webcam.play();
         window.requestAnimationFrame(loop);
 
-        // append elements to the DOM
+
         document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         }
@@ -177,9 +178,20 @@
     }
 
     async function predict() {
+
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2);
-        document.getElementById("gameexplaition4").innerHTML = classPrediction;
+        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
+        document.getElementById("gameexplaition3").innerHTML = classPrediction;
+        if(prediction[Qus_number] * 100 > 70){
+          window.requestAnimationFrame(loop);
+          document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
+          const image = new Image();
+          image.src = './image/' +Qus_number+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+          document.getElementById("gameexplaition5").append(categories_number[Qus_number] + ".")
+          document.getElementById("gameexplaition5").appendChild(image);
+        }
 
     }
 
