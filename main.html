@@ -124,9 +124,6 @@
         document.getElementById("gameexplaition2").innerHTML = categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?";
         window.requestAnimationFrame(loop);
 
-        const classPrediction =
-            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-        labelContainer.childNodes[i].innerHTML = classPrediction;
       })
 
       var Menu2 = document.createElement( 'button' );
