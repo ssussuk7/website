@@ -1,5 +1,7 @@
 <link rel="stylesheet" href="main.css">
 <link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap" rel="stylesheet">
+
+
 <style media="screen">
   h1{
     font-family: 'Nanum Myeongjo', serif;
@@ -8,30 +10,44 @@
   #right{
     font-family: 'Nanum Brush Script', cursive;
   }
+  .main{
+    height:70%;
+  }
+
+  </main>
 </style>
+
+
 <div id="title"><h1> 수 화(手 花) </h1></div>
-<div id="left">
-  <div id="webcam-container"></div>
-  <div id="label-container"></div>
+
+<div class="main">
+  <div id="left">
+    <div id="webcam-container"></div>
+    <div id="label-container"></div>
+  </div>
+
+  <div id="right">
+    <div id="gameexplaition"></div>
+    <div id="gameexplaition2"></div>
+    <div id="gameexplaition3"></div>
+    <div id="question_"></div>
+    <div id="answer"></div>
+  </div>
 </div>
 
-<div id="right">
-  <div id="gameexplaition"></div>
-  <div id="gameexplaition2"></div>
-  <div id="gameexplaition3"></div>
-  <div id="question_"></div>
-  <div id="answer"></div>
+
+<div class="button">
+  <div class="">
+    <button class="btn btn-3" onclick="init()">게임시작</button>
+    <button class="btn btn-5" onclick="game_explaition()">게임방법</button>
+  </div>
+
+  <div class="">
+    <button class="btn btn-1" onclick="window_reset()"> 전체리셋 </button>
+    <button class="btn btn-4" onclick="question_answer()"> 문제정답 </button>
+  </div>
 </div>
 
-<div class="">
-  <button class="btn btn-3" onclick="init()">게임시작</button>
-  <button class="btn btn-5" onclick="game_explaition()">게임방법</button>
-</div>
-
-<div class="">
-  <button class="btn btn-1" onclick="game_explaition()"> 전체리셋 </button>
-  <button class="btn btn-4" onclick="game_explaition()"> 문제정답 </button>
-</div>
 
 
 
@@ -46,14 +62,57 @@
 
     let model, webcam, labelContainer, maxPredictions, explain;
 
-    // Load the image model and setup the webcam
-    async function game_explaition(){
-      document.getElementById("gameexplaition").innerHTML = "1.게임시작을 누르면 카메라와 문제 종류가 나옵니다."
-      document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제를 고르고 클릭을 하면 그의 맞는 문제가 나옵니다."
-      document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 표현하게되면 정답/오답 으로 표현되고 다음 문제로 넘어갑니다."
-    }
+    var categories_All = ["0","1","2","3","4","5","6","7","8","9",
+              "10","11","12","13","14","15","16","17","18","19","20","21","22","23",
+              "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40"];
+    var categories_All_id = ["0","1","2","3","4","5","6","7","8","9",
+                     "ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ",
+                     "ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
 
+    var categories_number = ["0","1","2","3","4","5","6","7","8","9"];
+    var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+    var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+
+
+
+    //게임시작
     async function init() {
+      document.getElementById("gameexplaition").innerHTML = "";
+      document.getElementById("gameexplaition2").innerHTML = "";
+      document.getElementById("gameexplaition3").innerHTML = "";
+
+      var Menu1 = document.createElement( 'button' );
+      Menu1.className = 'Menu1class';
+      var Menu1Text = document.createTextNode( '1.숫자' );
+      Menu1.appendChild( Menu1Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu1 );
+
+      Menu1.addEventListener('click', function(event){
+
+      })
+
+      var Menu2 = document.createElement( 'button' );
+      Menu2.className = 'Menu2class';
+      var Menu2Text = document.createTextNode( '2.자음' );
+      Menu2.appendChild( Menu2Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu2 );
+
+      var Menu3 = document.createElement( 'button' );
+      Menu3.className = 'Menu3class';
+      var Menu3Text = document.createTextNode( '3.모음' );
+      Menu3.appendChild( Menu3Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu3 );
+
+      var Menu4 = document.createElement( 'button' );
+      Menu4.className = 'Menu4class';
+      var Menu4Text = document.createTextNode( '4.단어' );
+      Menu4.appendChild( Menu4Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu4 );
+
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
@@ -78,13 +137,11 @@
             labelContainer.appendChild(document.createElement("div"));
         }
     }
-
     async function loop() {
         webcam.update(); // update the webcam frame
         await predict();
         window.requestAnimationFrame(loop);
     }
-
     // run the webcam image through the image model
     async function predict() {
         // predict can take in an image, video or canvas html element
@@ -95,4 +152,81 @@
             labelContainer.childNodes[i].innerHTML = classPrediction;
         }
     }
+
+
+    //게임방법
+    async function game_explaition(){
+      document.getElementById("gameexplaition").innerHTML = "1.게임시작을 누르면 카메라와 문제 종류가 나옵니다.";
+      document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제를 고르고 클릭을 하면 그의 맞는 문제가 나옵니다.";
+      document.getElementById("gameexplaition3").innerHTML = "3.문제에 맞는 수화를 카메라에 표현하게되면 정답/오답 으로 표현되고 다음 문제로 넘어갑니다.";
+    }
+
+    //전체리셋
+    async function window_reset(){
+      window.location.reload();
+    }
+
+    //문제정답
+    async function question_answer(){
+      document.getElementById("gameexplaition").innerHTML = "";
+      document.getElementById("gameexplaition2").innerHTML = "";
+      document.getElementById("gameexplaition3").innerHTML = "";
+
+      var Menu1 = document.createElement( 'button' );
+      Menu1.className = 'Menu1class';
+      var Menu1Text = document.createTextNode( '1.숫자' );
+      Menu1.appendChild( Menu1Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu1 );
+
+      Menu1.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        for (var i = 0; i < categories_number.length; i++) {
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+          document.getElementById("gameexplaition2").append(categories_number[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+      })
+
+      var Menu2 = document.createElement( 'button' );
+      Menu2.className = 'Menu2class';
+      var Menu2Text = document.createTextNode( '2.자음' );
+      Menu2.appendChild( Menu2Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu2 );
+
+      Menu2.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        for (var i = 10; i < 10 + categories_consonant.length; i++) {
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+      })
+
+      var Menu3 = document.createElement( 'button' );
+      Menu3.className = 'Menu3class';
+      var Menu3Text = document.createTextNode( '3.모음' );
+      Menu3.appendChild( Menu3Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu3 );
+
+      var Menu4 = document.createElement( 'button' );
+      Menu4.className = 'Menu4class';
+      var Menu4Text = document.createTextNode( '4.단어' );
+      Menu4.appendChild( Menu4Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu4 );
+
+    }
+
+
 </script>
