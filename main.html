@@ -20,7 +20,9 @@
   h2{
     font-family: 'Nanum Myeongjo', serif;
   }
-
+  #time{
+    font-family: 'Nanum Brush Script', cursive;
+  }
   #right{
     font-family: 'Nanum Brush Script', cursive;
   }
@@ -45,7 +47,10 @@
 <div class="main">
   <div id="left">
     <div id="webcam-container"></div>
-    <div id="label-container"></div>
+  </div>
+
+  <div id ="time">
+
   </div>
 
   <div id="right">
@@ -96,10 +101,29 @@
 
 
 
-
     Score = 0;
     //게임시작
     async function init() {
+
+      var time = 20;
+      var min = "";
+      var sec = "";
+
+      var x = setInterval(function(){
+        min = parseInt(time/60);
+        sec = time%60;
+
+        document.getElementById("time").innerHTML = min + "분" + sec + "초";
+        time --;
+
+        if(time < 0){
+          webcam = false;
+          clearInterval(x);
+          document.getElementById("time").innerHTML = "시간초과";
+          document.getElementById("time").innerHTML = "총점은" + Score + "점 입니다.";
+        }
+      }, 1000);
+
       document.getElementById("webcam-container").innerHTML = "";
       document.getElementById("gameexplaition").innerHTML = "";
       document.getElementById("gameexplaition2").innerHTML = "";
@@ -117,6 +141,16 @@
       document.getElementById("gameexplaition").appendChild( Menu1 );
 
       Menu1.addEventListener('click',async function(event){
+
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
@@ -134,22 +168,6 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-
-        var timer = setInterval(function(){
-          var time = 10;
-
-          document.getElementById("gameexplaition5").innerHTML = time + "초";
-          time --;
-
-          if(time < 0){
-            clearInterval(timer);
-            Score = Score - 1;
-            webcam = false;
-            document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-            document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-          }
-        }, 1000);
-
 
       })
 
@@ -178,20 +196,6 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-
-        var timer = setInterval(function(){
-
-          document.getElementById("gameexplaition5").innerHTML = time + "초";
-          time --;
-
-          if(time < 0){
-            clearInterval(timer);
-            Score = Score - 1;
-            webcam = false;
-            document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-            document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-          }
-        }, 1000);
 
       })
 
@@ -336,7 +340,6 @@
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 85){
-          clearInterval(timer);
           webcam = false;
           Score = Score + 1
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
