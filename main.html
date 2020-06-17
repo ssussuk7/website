@@ -136,19 +136,19 @@
 
       var Menu2 = document.createElement( 'button' );
       Menu2.className = 'Menu2class';
-      var Menu2Text = document.createTextNode( '2.자음' );
+      var Menu2Text = document.createTextNode( '2.자음(1)' );
       Menu2.appendChild( Menu2Text );
 
       document.getElementById("gameexplaition").appendChild( Menu2 );
       Menu2.addEventListener('click', async function(event){
 
-        const modelURL_con = URL + "model_consonant1.json";
-        const metadataURL_con = URL + "metadata_consonant1.json";
+        const modelURL_con1 = URL + "model_consonant1.json";
+        const metadataURL_con1 = URL + "metadata_consonant1.json";
 
-        model = await tmImage.load(modelURL_con, metadataURL_con);
+        model = await tmImage.load(modelURL_con1, metadataURL_con1);
 
         Qus_number = Math.floor(Math.random() * 7);
-        Qus_number_plus = Qus_number + 10;
+        Qus_number_plus = Qus_number + 17;
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
@@ -165,10 +165,31 @@
 
       var Menu3 = document.createElement( 'button' );
       Menu3.className = 'Menu3class';
-      var Menu3Text = document.createTextNode( '3.모음' );
+      var Menu3Text = document.createTextNode( '3.자음(2)' );
       Menu3.appendChild( Menu3Text );
 
       document.getElementById("gameexplaition").appendChild( Menu3 );
+      Menu3.addEventListener('click', async function(event){
+
+        const modelURL_con2 = URL + "model_consonant2.json";
+        const metadataURL_con2 = URL + "metadata_consonant2.json";
+
+        model = await tmImage.load(modelURL_con2, metadataURL_con2);
+
+        Qus_number = Math.floor(Math.random() * 7);
+        Qus_number_plus = Qus_number + 10;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
 
       var Menu4 = document.createElement( 'button' );
       Menu4.className = 'Menu4class';
