@@ -120,6 +120,7 @@
         model = await tmImage.load(modelURL, metadataURL);
 
         Qus_number = Math.floor(Math.random() * 10);
+        Qus_number_plus = Qus_number;
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
@@ -200,7 +201,7 @@
 
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = categories_All_id[Qus_number_plus] + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
+        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
