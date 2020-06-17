@@ -94,6 +94,9 @@
     var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
 
+    var time = 10;
+
+
     Score = 0;
     //게임시작
     async function init() {
@@ -131,6 +134,20 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+        var timer = setInterval(function(){
+
+          document.getElementById("gameexplaition5").innerHTML = time + "초";
+          time --;
+
+          if(time < 0){
+            clearInterval(timer);
+            Score = Score - 1;
+            webcam = false;
+            document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+            document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+          }
+        }, 1000);
+
 
       })
 
@@ -159,6 +176,14 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+        if(time < 0){
+          clearInterval(timer);
+          Score = Score - 1;
+          webcam = false;
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+        }
+      }, 1000);
 
       })
 
@@ -188,6 +213,14 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+        if(time < 0){
+          clearInterval(timer);
+          Score = Score - 1;
+          webcam = false;
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+        }
+      }, 1000);
 
       })
 
@@ -216,12 +249,20 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+        if(time < 0){
+          clearInterval(timer);
+          Score = Score - 1;
+          webcam = false;
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+        }
+      }, 1000);
 
       })
 
       var Menu5 = document.createElement( 'button' );
       Menu5.className = 'Menu5class';
-      var Menu5Text = document.createTextNode( '4.모음(2)' );
+      var Menu5Text = document.createTextNode( '5.모음(2)' );
       Menu5.appendChild( Menu5Text );
 
       document.getElementById("gameexplaition").appendChild( Menu5 );
@@ -234,6 +275,42 @@
 
         Qus_number = Math.floor(Math.random() * 9);
         Qus_number_plus = Qus_number + 32;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+        if(time < 0){
+          clearInterval(timer);
+          Score = Score - 1;
+          webcam = false;
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+        }
+      }, 1000);
+
+      })
+
+      var Menu6 = document.createElement( 'button' );
+      Menu6.className = 'Menu6class';
+      var Menu6Text = document.createTextNode( '6.단어' );
+      Menu6.appendChild( Menu6Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu6 );
+      Menu6.addEventListener('click', async function(event){
+
+        const modelURL_vow2 = URL + "model_vowel2.json";
+        const metadataURL_vow2 = URL + "metadata_vowel2.json";
+
+        model = await tmImage.load(modelURL_vow2, metadataURL_vow2);
+
+        Qus_number = Math.floor(Math.random() * 10);
+        Qus_number_plus = Qus_number + 41;
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
