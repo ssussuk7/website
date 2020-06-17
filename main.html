@@ -193,10 +193,31 @@
 
       var Menu4 = document.createElement( 'button' );
       Menu4.className = 'Menu4class';
-      var Menu4Text = document.createTextNode( '4.단어' );
+      var Menu4Text = document.createTextNode( '4.모음(1)' );
       Menu4.appendChild( Menu4Text );
 
       document.getElementById("gameexplaition").appendChild( Menu4 );
+      Menu4.addEventListener('click', async function(event){
+
+        const modelURL_vow1 = URL + "model_vowel1.json";
+        const metadataURL_vow1 = URL + "metadata_vowel1.json";
+
+        model = await tmImage.load(modelURL_vow1, metadataURL_vow1);
+
+        Qus_number = Math.floor(Math.random() * 8);
+        Qus_number_plus = Qus_number + 24;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
 
         const flip = true;
         webcam = new tmImage.Webcam(400, 400, flip);
@@ -225,7 +246,7 @@
         const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
-        if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
+        if(prediction[Qus_number].probability.toFixed(2) * 100 > 85){
           webcam = false;
           Score = Score + 1
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
