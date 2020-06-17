@@ -141,12 +141,12 @@
       document.getElementById("gameexplaition").appendChild( Menu2 );
       Menu2.addEventListener('click', async function(event){
 
-        const modelURL_con = URL + "model_cons.json";
-        const metadataURL_con = URL + "metadata_cons.json";
+        const modelURL_con = URL + "model_consonant1.json";
+        const metadataURL_con = URL + "metadata_consonant1.json";
 
         model = await tmImage.load(modelURL_con, metadataURL_con);
 
-        Qus_number = Math.floor(Math.random() * 3);
+        Qus_number = Math.floor(Math.random() * 7) + 10;
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
@@ -154,7 +154,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_consonant[Qus_number] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -199,7 +199,7 @@
 
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
+        const classPrediction = categories_All_id[Qus_number] + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
@@ -211,7 +211,7 @@
           image.src = './image/' +Qus_number+ '.jpg';
           image.style.width = '100px';
           image.style.height = '100px';
-          document.getElementById("gameexplaition5").append(categories_number[Qus_number] + ".")
+          document.getElementById("gameexplaition5").append(categories_All_id[Qus_number] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
         }
 
