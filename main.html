@@ -96,16 +96,6 @@
 
     var time = 10;
 
-    var timer = setInterval(function(){
-
-      document.getElementById("gameexplaition").innerHTML = time + "초";
-      time --;
-
-      if(time < 0){
-        clearInterval(timer);
-        document.getElementById("gameexplaition").innerHTML = "시간초과";
-      }
-    }, 1000);
 
     Score = 0;
     //게임시작
