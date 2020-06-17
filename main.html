@@ -94,7 +94,7 @@
     var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
 
-    var time = 10;
+
 
 
     Score = 0;
@@ -136,6 +136,7 @@
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
         var timer = setInterval(function(){
+          var time = 10;
 
           document.getElementById("gameexplaition5").innerHTML = time + "초";
           time --;
