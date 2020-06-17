@@ -18,10 +18,30 @@ body {
   height: 90px;
 }
 #left{
-  width: 48%;
+  margin-top: 50px;
+  width: 43%;
   height: 500px;
   float: left;
   height: 50%;
+
+}
+#camera_text{
+  margin-top: 30px;
+  width: 400px;
+  height: 30px;
+  margin-left: 100px;
+  border-bottom-width: 2px;
+  border-bottom-style: solid;
+  border-bottom-color: black;
+  border-top-width: 2px;
+  border-top-style: solid;
+  border-top-color: black;
+  font-size: 2em;
+}
+#webcam-container{
+  width: 400px;
+  height: 400px;
+  margin-left: 100px;
 
 }
 
@@ -37,12 +57,12 @@ body {
   float: left;
   text-align: center;
   height: 50%;
-  font-size: 2em
+  font-size: 2em;
 }
 
 #right{
   text-align: left;
-  width: 50%;
+  width: 55%;
   height: 500px;
   float: left;
   height: 50%;
@@ -338,6 +358,31 @@ h2 {
 }
 
 .Menu5class:hover{
+        background-color: #2EE59D;
+        box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+}
+
+.Menu6class {
+        width: 140px;
+        height: 45px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 11px;
+        text-transform: uppercase;
+        letter-spacing: 2.5px;
+        font-weight: 500;
+        color: #000;
+        background-color: #fff;
+        border: none;
+        border-radius: 45px;
+        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        outline: none;
+        margin: 1em;
+        text-align: center;
+}
+
+.Menu6class:hover{
         background-color: #2EE59D;
         box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
 }

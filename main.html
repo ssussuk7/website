@@ -20,6 +20,9 @@
   h2{
     font-family: 'Nanum Myeongjo', serif;
   }
+  #camera_text{
+    font-family: 'Nanum Brush Script', cursive;
+  }
   #time{
     font-family: 'Nanum Brush Script', cursive;
   }
@@ -49,6 +52,7 @@
 
 <div class="main">
   <div id="left">
+  <div id="camera_text">camera</div>
     <div id="webcam-container"></div>
   </div>
 
@@ -105,7 +109,6 @@
     Score = 0;
     //게임시작
     async function init() {
-
 
       var min = "";
       var sec = "";
@@ -169,7 +172,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + " 은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -207,7 +210,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -246,7 +249,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -284,7 +287,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -321,7 +324,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
 
@@ -416,7 +419,7 @@
       document.getElementById("gameexplaition2").innerHTML = "2. 원하는 문제 종류(숫자 / 자음 / 모음 / 단어)를 클릭하면 문제가 나옵니다.";
       document.getElementById("gameexplaition3").innerHTML = "3. 문제에 맞는 수화를 카메라에 입력하고 정확도가 85프로 이상이면 정답이 되고 점수가 1점 추가됩니다.";
       document.getElementById("gameexplaition4").innerHTML = "4. 다음 문제는 문제 종류 버튼을 한번 더 누르면 나옵니다.";
-      document.getElementById("gameexplaition5").innerHTML = "5. 제한시간이 끝나면 총 점수가 집계됩니다.";
+      document.getElementById("gameexplaition5").innerHTML = "5. 모르는 문제는 '문제정답'버튼을 누르게 되면 답이 나와있습니다. 하지만 다시 '게임시작'버튼을 누르게 되면 시간은 더 빨리 갑니다.";
     }
 
     //전체리셋
@@ -456,8 +459,8 @@
           }
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
           document.getElementById("gameexplaition2").append(categories_number[i] + ".")
           document.getElementById("gameexplaition2").appendChild(image);
         }
@@ -468,8 +471,8 @@
           }
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
           document.getElementById("gameexplaition3").append(categories_number[i] + ".")
           document.getElementById("gameexplaition3").appendChild(image);
         }
@@ -495,8 +498,8 @@
 
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
 
           document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition2").appendChild(image);
@@ -509,8 +512,8 @@
 
         const image = new Image();
         image.src = './image/' +i+ '.jpg';
-        image.style.width = '100px';
-        image.style.height = '100px';
+        image.style.width = '90px';
+        image.style.height = '90px';
 
         document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
         document.getElementById("gameexplaition3").appendChild(image);
@@ -520,8 +523,8 @@
 
       const image = new Image();
       image.src = './image/' +i+ '.jpg';
-      image.style.width = '100px';
-      image.style.height = '100px';
+      image.style.width = '90px';
+      image.style.height = '90px';
 
       document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
       document.getElementById("gameexplaition4").appendChild(image);
@@ -548,8 +551,8 @@
 
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
 
           document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition2").appendChild(image);
@@ -562,8 +565,8 @@
 
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
 
           document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition3").appendChild(image);
@@ -575,8 +578,8 @@
           }
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
 
           document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition4").appendChild(image);
@@ -586,8 +589,8 @@
 
           const image = new Image();
           image.src = './image/' +i+ '.jpg';
-          image.style.width = '100px';
-          image.style.height = '100px';
+          image.style.width = '90px';
+          image.style.height = '90px';
 
           document.getElementById("gameexplaition5").append(categories_All_id[i] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
