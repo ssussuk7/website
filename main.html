@@ -34,7 +34,7 @@
 
 <div id="title">
   <div class="">
-      <h1> 수 화(手 花) </h1>
+      <h1> 수 화(手 語) </h1>
   </div>
   <div class="">
     <h2>손으로 표현하다.</h2>
@@ -219,6 +219,34 @@
 
       })
 
+      var Menu5 = document.createElement( 'button' );
+      Menu5.className = 'Menu5class';
+      var Menu5Text = document.createTextNode( '4.모음(2)' );
+      Menu5.appendChild( Menu5Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu5 );
+      Menu5.addEventListener('click', async function(event){
+
+        const modelURL_vow2 = URL + "model_vowel2.json";
+        const metadataURL_vow2 = URL + "metadata_vowel2.json";
+
+        model = await tmImage.load(modelURL_vow2, metadataURL_vow2);
+
+        Qus_number = Math.floor(Math.random() * 9);
+        Qus_number_plus = Qus_number + 32;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
         const flip = true;
         webcam = new tmImage.Webcam(400, 400, flip);
         await webcam.setup();
@@ -243,7 +271,7 @@
 
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
+        const classPrediction = "정확도 :" + prediction[Qus_number].className + "- " + prediction[Qus_number].probability.toFixed(2) * 100 + " %";
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 85){
