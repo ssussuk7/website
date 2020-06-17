@@ -141,12 +141,12 @@
       document.getElementById("gameexplaition").appendChild( Menu2 );
       Menu2.addEventListener('click', async function(event){
 
-        const modelURL_con = URL + "model_con.json";
-        const metadataURL_con = URL + "metadata_con.json";
+        const modelURL_con = URL + "model_cons.json";
+        const metadataURL_con = URL + "metadata_cons.json";
 
         model = await tmImage.load(modelURL_con, metadataURL_con);
 
-        Qus_number = Math.floor(Math.random() * 14) + 10;
+        Qus_number = Math.floor(Math.random() * 3);
 
         document.getElementById("gameexplaition2").innerHTML = "";
         document.getElementById("gameexplaition3").innerHTML = "";
@@ -199,7 +199,7 @@
 
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
-        const classPrediction = categories_All_id[Qus_number] + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
+        const classPrediction = prediction[Qus_number].className + ": " + prediction[Qus_number].probability.toFixed(2) * 100;
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 70){
