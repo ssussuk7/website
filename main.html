@@ -96,6 +96,16 @@
 
     var time = 10;
 
+    var timer = setInterval(function(){
+
+      document.getElementById("gameexplaition").innerHTML = time + "초";
+      time --;
+
+      if(time < 0){
+        clearInterval(timer);
+        document.getElementById("gameexplaition").innerHTML = "시간초과";
+      }
+    }, 1000);
 
     Score = 0;
     //게임시작
@@ -134,6 +144,7 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
         var timer = setInterval(function(){
 
           document.getElementById("gameexplaition5").innerHTML = time + "초";
@@ -176,14 +187,20 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-        if(time < 0){
-          clearInterval(timer);
-          Score = Score - 1;
-          webcam = false;
-          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-        }
-      }, 1000);
+
+        var timer = setInterval(function(){
+
+          document.getElementById("gameexplaition5").innerHTML = time + "초";
+          time --;
+
+          if(time < 0){
+            clearInterval(timer);
+            Score = Score - 1;
+            webcam = false;
+            document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+            document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
+          }
+        }, 1000);
 
       })
 
@@ -213,14 +230,6 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-        if(time < 0){
-          clearInterval(timer);
-          Score = Score - 1;
-          webcam = false;
-          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-        }
-      }, 1000);
 
       })
 
@@ -249,14 +258,6 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-        if(time < 0){
-          clearInterval(timer);
-          Score = Score - 1;
-          webcam = false;
-          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-        }
-      }, 1000);
 
       })
 
@@ -285,14 +286,6 @@
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
         window.requestAnimationFrame(loop_quiz);
         document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-        if(time < 0){
-          clearInterval(timer);
-          Score = Score - 1;
-          webcam = false;
-          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
-          document.getElementById("gameexplaition5").innerHTML = "오답입니다 Score -1점.";
-        }
-      }, 1000);
 
       })
 
@@ -352,6 +345,7 @@
         document.getElementById("gameexplaition3").innerHTML = classPrediction;
 
         if(prediction[Qus_number].probability.toFixed(2) * 100 > 85){
+          clearInterval(timer);
           webcam = false;
           Score = Score + 1
           document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
