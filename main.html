@@ -42,6 +42,9 @@
     <h2>손으로 표현하다.</h2>
   </div>
 
+  <div id ="time">
+
+  </div>
 </div>
 
 <div class="main">
@@ -49,9 +52,7 @@
     <div id="webcam-container"></div>
   </div>
 
-  <div id ="time">
 
-  </div>
 
   <div id="right">
     <div id="gameexplaition"></div>
@@ -105,15 +106,16 @@
     //게임시작
     async function init() {
 
-      var time = 20;
+      var time = 180;
       var min = "";
       var sec = "";
 
+      clearInterval(x);
       var x = setInterval(function(){
         min = parseInt(time/60);
         sec = time%60;
 
-        document.getElementById("time").innerHTML = min + "분" + sec + "초";
+        document.getElementById("time").innerHTML = "남은시간 :" +min + "분" + sec + "초";
         time --;
 
         if(time < 0){
@@ -151,6 +153,7 @@
         window.requestAnimationFrame(loop);
 
         document.getElementById("webcam-container").appendChild(webcam.canvas);
+
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
@@ -178,6 +181,13 @@
 
       document.getElementById("gameexplaition").appendChild( Menu2 );
       Menu2.addEventListener('click', async function(event){
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         const modelURL_con1 = URL + "model_consonant1.json";
         const metadataURL_con1 = URL + "metadata_consonant1.json";
@@ -207,6 +217,13 @@
 
       document.getElementById("gameexplaition").appendChild( Menu3 );
       Menu3.addEventListener('click', async function(event){
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         const modelURL_con2 = URL + "model_consonant2.json";
         const metadataURL_con2 = URL + "metadata_consonant2.json";
@@ -235,6 +252,13 @@
 
       document.getElementById("gameexplaition").appendChild( Menu4 );
       Menu4.addEventListener('click', async function(event){
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         const modelURL_vow1 = URL + "model_vowel1.json";
         const metadataURL_vow1 = URL + "metadata_vowel1.json";
@@ -263,6 +287,13 @@
 
       document.getElementById("gameexplaition").appendChild( Menu5 );
       Menu5.addEventListener('click', async function(event){
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         const modelURL_vow2 = URL + "model_vowel2.json";
         const metadataURL_vow2 = URL + "metadata_vowel2.json";
@@ -291,6 +322,13 @@
 
       document.getElementById("gameexplaition").appendChild( Menu6 );
       Menu6.addEventListener('click', async function(event){
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
 
         const modelURL_vow2 = URL + "model_vowel2.json";
         const metadataURL_vow2 = URL + "metadata_vowel2.json";
@@ -357,6 +395,7 @@
 
     //게임방법
     async function game_explaition(){
+      webcam = false;
       document.getElementById("webcam-container").innerHTML = "";
       document.getElementById("gameexplaition").innerHTML = "1.'게임시작'을 누르면 카메라와 문제 종류가 나옵니다.";
       document.getElementById("gameexplaition2").innerHTML = "2.원하는 문제 종류를 클릭하면 문제가 나옵니다.";
@@ -372,6 +411,7 @@
 
     //문제정답
     async function question_answer(){
+      webcam = false;
       document.getElementById("webcam-container").innerHTML = "";
       document.getElementById("gameexplaition").innerHTML = "";
       document.getElementById("gameexplaition2").innerHTML = "";
