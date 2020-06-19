@@ -454,9 +454,9 @@
 
     async function predict_numQuiz(){
       const prediction = await model.predict(webcam.canvas);
+      Max_predict = prediction[0].probability.toFixed;
+      Max_id = prediction[0].className;
       for (var i = 0; i < categories_number.length; i++) {
-        Max_predict = prediction[0].probability.toFixed;
-        Max_id = prediction[0].className;
         if (Max_predict < prediction[i].probability.toFixed) {
           Max_predict = prediction[i].probability.toFixed;
           Max_id = prediction[i].className;
