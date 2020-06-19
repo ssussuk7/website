@@ -497,7 +497,7 @@
       for (var i = 0; i < categories_number.length; i++) {
         if (Max_predict < prediction[i].probability) {
           Max_predict = prediction[i].probability;
-          Max_id = prediction[i].className;
+          Max_id = i;
         }
       }
       document.getElementById("gameexplaition3").innerHTML = "예상 : " + Max_id;
