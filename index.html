@@ -382,23 +382,6 @@
         Qus_number1 = Math.floor(Math.random() * 100);
         Qus_number2 = Math.floor(Math.random() * 100);
         Numquiz_Answer = Qus_number1 + Qus_number2;
-        Answer_array = [];
-
-        if(parseInt(Numquiz_Answer / 100) > 0){
-          Answer_array[0] = parseInt(Numquiz_Answer / 100);
-          Answer_array[1] = parseInt((Numquiz_Answer % 100) / 10);
-          Answer_array[2] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
-        }
-        if(parseInt(Numquiz_Answer / 100) == 0){
-          if(parseInt(Numquiz_Answer / 10) > 0){
-            Answer_array[0] = parseInt((Numquiz_Answer % 100) / 10);
-            Answer_array[1] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
-
-          }
-          if(parseInt(Numquiz_Answer / 10) == 0){
-            Answer_array[0] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
-          }
-        }
 
         const flip = true;
         webcam = new tmImage.Webcam(400, 400, flip);
@@ -427,13 +410,27 @@
         var Menu7_1Text = document.createTextNode( '캡쳐' );
         Menu7_1.appendChild( Menu7_1Text );
 
+        var 7_1_output = 0;
+
         document.getElementById("gameexplaition4").appendChild( Menu7_1 );
         Menu7_1.addEventListener('click', async function(event){
-          var inner = Max_id;
+
+          var inner = Max_id + 7_1_output;
+
+          if( inner == Numquiz_Answer){
+            webcam = false;
+            Score = Score + 1;
+            document.getElementById("gameexplaition5").innerHTML = "정답 :" + Numquiz_Answer + "/ Score:" + Score;
+          }
           var div7_1 = document.createElement('div');
           div7_1.id = 'div7_1class';
           document.getElementById("gameexplaition5").appendChild( div7_1 );
           document.getElementById("div7_1class").innerHTML = inner;
+
+          7_1_output = inner * 10;
+
+
+
         })
 
         var Menu7_2 = document.createElement( 'button' );
