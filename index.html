@@ -402,7 +402,7 @@
         document.getElementById("gameexplaition5").innerHTML = "";
 
 
-        document.getElementById("gameexplaition2").innerHTML = ( Qus_number1 + " + " + Qus_number2 + "=?" );
+        document.getElementById("gameexplaition2").innerHTML = ("문제 :" Qus_number1 + " + " + Qus_number2 + "=?" );
         window.requestAnimationFrame(loop_quiz_num);
 
         var Menu7_1 = document.createElement( 'button' );
@@ -426,9 +426,6 @@
           }
 
           output7_1  = inner * 10;
-
-
-
         })
 
         var Menu7_2 = document.createElement( 'button' );
@@ -438,6 +435,8 @@
 
         document.getElementById("gameexplaition4").appendChild( Menu7_2 );
         Menu7_2.addEventListener('click', async function(event){
+          output7_1 = 0;
+          document.getElementById("gameexplaition5").innerHTML = "";
 
         })
 
