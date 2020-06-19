@@ -418,12 +418,13 @@
           var inner = Max_id;
           inner = inner + output7_1;
 
+          document.getElementById("gameexplaition5").innerHTML = inner;
           if( inner == Numquiz_Answer){
             webcam = false;
             Score = Score + 1;
-            document.getElementById("gameexplaition5").innerHTML = "정답 :" + Numquiz_Answer + "/ Score:" + Score;
+            document.getElementById("gameexplaition5").innerHTML = Numquiz_Answer + " 정답입니다! / Score :" + Score;
           }
-          document.getElementById("gameexplaition5").innerHTML = inner;
+
           output7_1  = inner * 10;
 
 
