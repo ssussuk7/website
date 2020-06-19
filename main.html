@@ -368,6 +368,81 @@
 
       })
 
+      let Qus_number1, Qus_number2, Numquiz_Answer;
+
+      var Menu7 = document.createElement( 'button' );
+      Menu7.className = 'Menu7class';
+      var Menu7Text = document.createTextNode( '7.숫자퀴즈' );
+      Menu7.appendChild( Menu7Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu7 );
+      Menu7.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        Qus_number1 = Math.floor(Math.random() * 100);
+        Qus_number2 = Math.floor(Math.random() * 100);
+        Numquiz_Answer = Qus_number1 + Qus_number2;
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = ("문제 :"+ Qus_number1 + " + " + Qus_number2 + "=?" );
+        window.requestAnimationFrame(loop_quiz_num);
+
+        var Menu7_1 = document.createElement( 'button' );
+        Menu7_1.className = 'Menu7_1class';
+        var Menu7_1Text = document.createTextNode( '캡쳐' );
+        Menu7_1.appendChild( Menu7_1Text );
+
+        var output7_1 = 0;
+
+        document.getElementById("gameexplaition4").appendChild( Menu7_1 );
+        Menu7_1.addEventListener('click', async function(event){
+
+          var inner = Max_id;
+          inner = inner + output7_1;
+
+          document.getElementById("gameexplaition5").innerHTML = inner;
+          if( inner == Numquiz_Answer){
+            webcam = false;
+            Score = Score + 1;
+            document.getElementById("gameexplaition5").innerHTML = Numquiz_Answer + " 정답입니다! / Score :" + Score;
+          }
+
+          output7_1  = inner * 10;
+        })
+
+        var Menu7_2 = document.createElement( 'button' );
+        Menu7_2.className = 'Menu7_2class';
+        var Menu7_2Text = document.createTextNode( '리셋' );
+        Menu7_2.appendChild( Menu7_2Text );
+
+        document.getElementById("gameexplaition4").appendChild( Menu7_2 );
+        Menu7_2.addEventListener('click', async function(event){
+          output7_1 = 0;
+          document.getElementById("gameexplaition5").innerHTML = "";
+
+        })
+
+
+      })
+
         const flip = true;
         webcam = new tmImage.Webcam(400, 400, flip);
         await webcam.setup();
@@ -390,6 +465,12 @@
       window.requestAnimationFrame(loop_quiz);
     }
 
+    async function loop_quiz_num(){
+      webcam.update();
+      await predict_numQuiz();
+      window.requestAnimationFrame(loop_quiz_num);
+    }
+
     async function predict() {
         const prediction = await model.predict(webcam.canvas);
         const classPrediction = "정확도 :" + prediction[Qus_number].className + "- " + prediction[Qus_number].probability.toFixed(2) * 100 + " %";
@@ -407,8 +488,20 @@
           document.getElementById("gameexplaition5").append(categories_All_id[Qus_number_plus] + ".")
           document.getElementById("gameexplaition5").appendChild(image);
         }
-
     }
+
+    async function predict_numQuiz(){
+      const prediction = await model.predict(webcam.canvas);
+      Max_predict = prediction[0].probability;
+      Max_id = prediction[0].className;
+      for (var i = 0; i < categories_number.length; i++) {
+        if (Max_predict < prediction[i].probability) {
+          Max_predict = prediction[i].probability;
+          Max_id = i;
+        }
+      }
+      document.getElementById("gameexplaition3").innerHTML = "예상 : " + Max_id;
+  }
 
 
     //게임방법
