@@ -410,24 +410,20 @@
         var Menu7_1Text = document.createTextNode( '캡쳐' );
         Menu7_1.appendChild( Menu7_1Text );
 
-        var 7_1_output = 0;
+        var output7_1 = 0;
 
         document.getElementById("gameexplaition4").appendChild( Menu7_1 );
         Menu7_1.addEventListener('click', async function(event){
 
-          var inner = Max_id + 7_1_output;
+          var inner = Max_id + output7_1 ;
 
           if( inner == Numquiz_Answer){
             webcam = false;
             Score = Score + 1;
             document.getElementById("gameexplaition5").innerHTML = "정답 :" + Numquiz_Answer + "/ Score:" + Score;
           }
-          var div7_1 = document.createElement('div');
-          div7_1.id = 'div7_1class';
-          document.getElementById("gameexplaition5").appendChild( div7_1 );
-          document.getElementById("div7_1class").innerHTML = inner;
-
-          7_1_output = inner * 10;
+          document.getElementById("gameexplaition5").innerHTML = inner;
+          output7_1  = inner * 10;
 
 
 
