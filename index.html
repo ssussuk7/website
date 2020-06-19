@@ -453,10 +453,16 @@
     }
 
     async function predict_numQuiz(){
-      const prediction = await model.maxpredict(webcam.canvas).className;
-
-      document.getElementById("gameexplaition3").innerHTML = prediction;
-
+      const prediction = await model.predict(webcam.canvas);
+      for (var i = 0; i < categories_number.length; i++) {
+        Max_predict = prediction[0].probability.toFixed;
+        Max_id = prediction[0].className;
+        if (Max_predict < prediction[i].probability.toFixed) {
+          Max_predict = prediction[i].probability.toFixed;
+          Max_id = prediction[i].className;
+        }
+      }
+      document.getElementById("gameexplaition3").innerHTML = Max_id;
   }
 
 
