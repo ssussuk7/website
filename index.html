@@ -368,6 +368,8 @@
 
       })
 
+      let Qus_number1, Qus_number2, Numquiz_Answer;
+
       var Menu7 = document.createElement( 'button' );
       Menu7.className = 'Menu7class';
       var Menu7Text = document.createTextNode( '7.숫자퀴즈' );
@@ -379,6 +381,24 @@
 
         Qus_number1 = Math.floor(Math.random() * 100);
         Qus_number2 = Math.floor(Math.random() * 100);
+        Numquiz_Answer = Qus_number1 + Qus_number2;
+        Answer_array[];
+
+        if(parseInt(Numquiz_Answer / 100) > 0){
+          Answer_array[0] = parseInt(Numquiz_Answer / 100);
+          Answer_array[1] = parseInt((Numquiz_Answer % 100) / 10);
+          Answer_array[2] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
+        }
+        if(parseInt(Numquiz_Answer / 100) == 0){
+          if(parseInt(Numquiz_Answer / 10) > 0){
+            Answer_array[0] = parseInt((Numquiz_Answer % 100) / 10);
+            Answer_array[1] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
+
+          }
+          if(parseInt(Numquiz_Answer / 10) == 0){
+            Answer_array[0] = parseInt(((Numquiz_Answer % 100) % 10) / 1);
+          }
+        }
 
         const flip = true;
         webcam = new tmImage.Webcam(400, 400, flip);
@@ -401,7 +421,35 @@
 
         document.getElementById("gameexplaition2").innerHTML = ( Qus_number1 + " + " + Qus_number2 + "=?" );
         window.requestAnimationFrame(loop_quiz_num);
-        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+        var Menu7_1 = document.createElement( 'button' );
+        Menu7_1.className = 'Menu7_1class';
+        var Menu7_1Text = document.createTextNode( '캡쳐' );
+        Menu7_1.appendChild( Menu7_1Text );
+
+        document.getElementById("gameexplaition3").appendChild( Menu7_1 );
+        Menu7_1.addEventListener('click', async function(event){
+          webcam = false;
+          var inner = Max_id;
+          var div7_1 = document.createElement('div');
+          div7_1.className = 'div7_1class';
+          document.getElementById("gameexplaition5").appendChild( Menu7_1 );
+          document.getelementsbyclassname("div7_1class").innerHTML = inner;
+
+
+
+        })
+
+        var Menu7_2 = document.createElement( 'button' );
+        Menu7_2.className = 'Menu7_2class';
+        var Menu7_2Text = document.createTextNode( 리셋' );
+        Menu7_2.appendChild( Menu7_2Text );
+
+        document.getElementById("gameexplaition3").appendChild( Menu7_2 );
+        Menu7_2.addEventListener('click', async function(event){
+
+        })
+
 
       })
 
@@ -462,7 +510,7 @@
           Max_id = prediction[i].className;
         }
       }
-      document.getElementById("gameexplaition3").innerHTML = Max_id;
+      document.getElementById("gameexplaition3").innerHTML = "예상 : " + Max_id;
   }
 
 
