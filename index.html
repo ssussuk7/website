@@ -1,13 +1,661 @@
-<!DOCTYPE html>
-<html lang="en">
+<!Doctype html>
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>Sign language Game</title>
 </head>
-<body>
-  welcome
 
+<link rel="stylesheet" href="main.css">
+<link href="https://fonts.googleapis.com/css2?family=East+Sea+Dokdo&family=Nanum+Brush+Script&family=Nanum+Myeongjo:wght@800&family=Song+Myung&display=swap" rel="stylesheet">
+
+<body>
+
+
+<style media="screen">
+  h1{
+    font-family: 'Nanum Myeongjo', serif;
+  }
+  h2{
+    font-family: 'Nanum Myeongjo', serif;
+  }
+  #camera_text{
+    font-family: 'Nanum Brush Script', cursive;
+  }
+  #time{
+    font-family: 'Nanum Brush Script', cursive;
+  }
+  #right{
+    font-family: 'Nanum Brush Script', cursive;
+  }
+  .main{
+    height:70%;
+  }
+
+  </main>
+</style>
+
+
+<div id="title">
+  <div class="">
+      <h1> 수 화(手 語) </h1>
+  </div>
+  <div class="">
+    <h2>손으로 표현하다.</h2>
+  </div>
+
+  <div id ="time">
+
+  </div>
+</div>
+
+<div class="main">
+  <div id="left">
+  <div id="camera_text">camera</div>
+    <div id="webcam-container"></div>
+  </div>
+
+
+
+  <div id="right">
+    <div id="gameexplaition"></div>
+    <div id="gameexplaition2"></div>
+    <div id="gameexplaition3"></div>
+    <div id="gameexplaition4"></div>
+    <div id="gameexplaition5"></div>
+    <div id="question_"></div>
+    <div id="answer"></div>
+  </div>
+</div>
+
+
+<div class="button">
+  <div class="">
+    <button class="btn btn-3" onclick="init()">게임시작</button>
+    <button class="btn btn-5" onclick="game_explaition()">게임방법</button>
+  </div>
+
+  <div class="">
+    <button class="btn btn-1" onclick="window_reset()"> 전체리셋 </button>
+    <button class="btn btn-4" onclick="question_answer()"> 문제정답 </button>
+  </div>
+</div>
+
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.3.1/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@0.8/dist/teachablemachine-image.min.js"></script>
+<script type="text/javascript">
+
+    const URL = "./";
+
+    let model, webcam, labelContainer, maxPredictions, explain, Qus_number, Qus_consonant, Qus_vewel, Score, Qus_number_plus;
+
+    var categories_All = ["0","1","2","3","4","5","6","7","8","9",
+              "10","11","12","13","14","15","16","17","18","19","20","21","22","23",
+              "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40"];
+    var categories_All_id = ["0","1","2","3","4","5","6","7","8","9",
+                     "ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ",
+                     "ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+
+    var categories_number = ["0","1","2","3","4","5","6","7","8","9"];
+    var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
+    var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+
+
+    var time = 180;
+    Score = 0;
+    //게임시작
+    async function init() {
+
+      var min = "";
+      var sec = "";
+
+      clearInterval(x);
+      var x = setInterval(function(){
+        min = parseInt(time/60);
+        sec = time%60;
+
+        document.getElementById("time").innerHTML = "남은시간 :" +min + "분" + sec + "초";
+        time --;
+
+        if(time < 0){
+          webcam = false;
+          clearInterval(x);
+          document.getElementById("time").innerHTML = "시간초과";
+          document.getElementById("time").innerHTML = "총점은" + Score + "점 입니다.";
+        }
+      }, 1000);
+
+      document.getElementById("webcam-container").innerHTML = "";
+      document.getElementById("gameexplaition").innerHTML = "";
+      document.getElementById("gameexplaition2").innerHTML = "";
+      document.getElementById("gameexplaition3").innerHTML = "";
+      document.getElementById("gameexplaition4").innerHTML = "";
+      document.getElementById("gameexplaition5").innerHTML = "";
+
+
+
+      var Menu1 = document.createElement( 'button' );
+      Menu1.className = 'Menu1class';
+      var Menu1Text = document.createTextNode( '1.숫자' );
+      Menu1.appendChild( Menu1Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu1 );
+
+      Menu1.addEventListener('click',async function(event){
+
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+
+        Qus_number = Math.floor(Math.random() * 10);
+        Qus_number_plus = Qus_number;
+
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + " 은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+      var Menu2 = document.createElement( 'button' );
+      Menu2.className = 'Menu2class';
+      var Menu2Text = document.createTextNode( '2.자음(1)' );
+      Menu2.appendChild( Menu2Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu2 );
+      Menu2.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL_con1 = URL + "model_consonant1.json";
+        const metadataURL_con1 = URL + "metadata_consonant1.json";
+
+        model = await tmImage.load(modelURL_con1, metadataURL_con1);
+
+        Qus_number = Math.floor(Math.random() * 7);
+        Qus_number_plus = Qus_number + 10;
+
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+
+      var Menu3 = document.createElement( 'button' );
+      Menu3.className = 'Menu3class';
+      var Menu3Text = document.createTextNode( '3.자음(2)' );
+      Menu3.appendChild( Menu3Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu3 );
+      Menu3.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL_con2 = URL + "model_consonant2.json";
+        const metadataURL_con2 = URL + "metadata_consonant2.json";
+
+        model = await tmImage.load(modelURL_con2, metadataURL_con2);
+
+        Qus_number = Math.floor(Math.random() * 7);
+        Qus_number_plus = Qus_number + 17;
+
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+      var Menu4 = document.createElement( 'button' );
+      Menu4.className = 'Menu4class';
+      var Menu4Text = document.createTextNode( '4.모음(1)' );
+      Menu4.appendChild( Menu4Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu4 );
+      Menu4.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL_vow1 = URL + "model_vowel1.json";
+        const metadataURL_vow1 = URL + "metadata_vowel1.json";
+
+        model = await tmImage.load(modelURL_vow1, metadataURL_vow1);
+
+        Qus_number = Math.floor(Math.random() * 8);
+        Qus_number_plus = Qus_number + 24;
+
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+      var Menu5 = document.createElement( 'button' );
+      Menu5.className = 'Menu5class';
+      var Menu5Text = document.createTextNode( '5.모음(2)' );
+      Menu5.appendChild( Menu5Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu5 );
+      Menu5.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL_vow2 = URL + "model_vowel2.json";
+        const metadataURL_vow2 = URL + "metadata_vowel2.json";
+
+        model = await tmImage.load(modelURL_vow2, metadataURL_vow2);
+
+        Qus_number = Math.floor(Math.random() * 9);
+        Qus_number_plus = Qus_number + 32;
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+      var Menu6 = document.createElement( 'button' );
+      Menu6.className = 'Menu6class';
+      var Menu6Text = document.createTextNode( '6.단어' );
+      Menu6.appendChild( Menu6Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu6 );
+      Menu6.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL_vow2 = URL + "model_vowel2.json";
+        const metadataURL_vow2 = URL + "metadata_vowel2.json";
+
+        model = await tmImage.load(modelURL_vow2, metadataURL_vow2);
+
+        Qus_number = Math.floor(Math.random() * 10);
+        Qus_number_plus = Qus_number + 41;
+
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
+        window.requestAnimationFrame(loop_quiz);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+      var Menu7 = document.createElement( 'button' );
+      Menu7.className = 'Menu7class';
+      var Menu7Text = document.createTextNode( '7.숫자퀴즈' );
+      Menu7.appendChild( Menu7Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu7 );
+      Menu7.addEventListener('click', async function(event){
+        document.getElementById("webcam-container").innerHTML = "";
+
+        Qus_number1 = Math.floor(Math.random() * 100);
+        Qus_number2 = Math.floor(Math.random() * 100);
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        const modelURL = URL + "model.json";
+        const metadataURL = URL + "metadata.json";
+
+        model = await tmImage.load(modelURL, metadataURL);
+
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        document.getElementById("gameexplaition2").innerHTML = ( Qus_number1 + " + " + Qusnumber2 + "=?" );
+        window.requestAnimationFrame(loop_quiz_num);
+        document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+
+      })
+
+        const flip = true;
+        webcam = new tmImage.Webcam(400, 400, flip);
+        await webcam.setup();
+        await webcam.play();
+        window.requestAnimationFrame(loop);
+
+
+        document.getElementById("webcam-container").appendChild(webcam.canvas);
+
+        }
+
+    async function loop() {
+        webcam.update();
+        window.requestAnimationFrame(loop);
+    }
+
+    async function loop_quiz(){
+      webcam.update();
+      await predict();
+      window.requestAnimationFrame(loop_quiz);
+    }
+
+    async function loop_quiz_num(){
+      webcam.update();
+      await predict_numQuiz();
+      window.requestAnimationFrame(loop_quiz_num);
+    }
+
+    async function predict() {
+        const prediction = await model.predict(webcam.canvas);
+        const classPrediction = "정확도 :" + prediction[Qus_number].className + "- " + prediction[Qus_number].probability.toFixed(2) * 100 + " %";
+        document.getElementById("gameexplaition3").innerHTML = classPrediction;
+
+        if(prediction[Qus_number].probability.toFixed(2) * 100 > 85){
+          webcam = false;
+          Score = Score + 1
+          document.getElementById("gameexplaition3").innerHTML = "정답입니다 !";
+          document.getElementById("gameexplaition4").innerHTML = "Score :" + Score;
+          const image = new Image();
+          image.src = './image/' +Qus_number_plus+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+          document.getElementById("gameexplaition5").append(categories_All_id[Qus_number_plus] + ".")
+          document.getElementById("gameexplaition5").appendChild(image);
+        }
+    }
+
+    async function predict_numQuiz(){
+      const prediction = await model.maxpredict(webcam.canvas).className;
+
+      document.getElementById("gameexplaition3").innerHTML = prediction;
+
+  }
+
+
+    //게임방법
+    async function game_explaition(){
+      webcam = false;
+      document.getElementById("webcam-container").innerHTML = "";
+      document.getElementById("gameexplaition").innerHTML = "1. '게임시작'을 누르면 카메라와 문제 종류가 나옵니다. 제한시간은 3분입니다.";
+      document.getElementById("gameexplaition2").innerHTML = "2. 원하는 문제 종류(숫자 / 자음 / 모음 / 단어)를 클릭하면 문제가 나옵니다.";
+      document.getElementById("gameexplaition3").innerHTML = "3. 문제에 맞는 수화를 카메라에 입력하고 정확도가 85프로 이상이면 정답이 되고 점수가 1점 추가됩니다.";
+      document.getElementById("gameexplaition4").innerHTML = "4. 다음 문제는 문제 종류 버튼을 한번 더 누르면 나옵니다.";
+      document.getElementById("gameexplaition5").innerHTML = "5. 모르는 문제는 '문제정답'버튼을 누르게 되면 답이 나와있습니다. 하지만 다시 '게임시작'버튼을 누르게 되면 시간은 더 빨리 갑니다.";
+    }
+
+    //전체리셋
+    async function window_reset(){
+      window.location.reload();
+    }
+
+    //문제정답
+    async function question_answer(){
+      webcam = false;
+      document.getElementById("webcam-container").innerHTML = "";
+      document.getElementById("gameexplaition").innerHTML = "";
+      document.getElementById("gameexplaition2").innerHTML = "";
+      document.getElementById("gameexplaition3").innerHTML = "";
+      document.getElementById("gameexplaition4").innerHTML = "";
+      document.getElementById("gameexplaition5").innerHTML = "";
+
+      var Menu1 = document.createElement( 'button' );
+      Menu1.className = 'Menu1class';
+      var Menu1Text = document.createTextNode( '1.숫자' );
+      Menu1.appendChild( Menu1Text );
+
+
+
+      document.getElementById("gameexplaition").appendChild( Menu1 );
+
+      Menu1.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+
+        for (var i = 0; i < categories_number.length; i++) {
+          if (i ==5) {
+            break;
+          }
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+          document.getElementById("gameexplaition2").append(categories_number[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+
+        for (var i = 5; i < categories_number.length; i++) {
+          if (i ==10) {
+            break;
+          }
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+          document.getElementById("gameexplaition3").append(categories_number[i] + ".")
+          document.getElementById("gameexplaition3").appendChild(image);
+        }
+      })
+
+      var Menu2 = document.createElement( 'button' );
+      Menu2.className = 'Menu2class';
+      var Menu2Text = document.createTextNode( '2.자음' );
+      Menu2.appendChild( Menu2Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu2 );
+
+      Menu2.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+        for (var i = 10; i < 10 + categories_consonant.length; i++) {
+          if (i == 15) {
+            break;
+          }
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+
+          document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+
+      for (var i = 15; i < 10 + categories_consonant.length; i++) {
+        if (i == 20) {
+          break;
+        }
+
+        const image = new Image();
+        image.src = './image/' +i+ '.jpg';
+        image.style.width = '90px';
+        image.style.height = '90px';
+
+        document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
+        document.getElementById("gameexplaition3").appendChild(image);
+      }
+
+    for (var i = 20; i < 10 + categories_consonant.length; i++) {
+
+      const image = new Image();
+      image.src = './image/' +i+ '.jpg';
+      image.style.width = '90px';
+      image.style.height = '90px';
+
+      document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
+      document.getElementById("gameexplaition4").appendChild(image);
+    }
+  })
+
+      var Menu3 = document.createElement( 'button' );
+      Menu3.className = 'Menu3class';
+      var Menu3Text = document.createTextNode( '3.모음' );
+      Menu3.appendChild( Menu3Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu3 );
+
+      Menu3.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+
+        for (var i = 24; i < 24 + categories_vowel.length; i++) {
+          if (i == 29) {
+            break;
+          }
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+
+          document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+
+        for (var i = 29; i < 24 + categories_vowel.length; i++) {
+          if (i == 34) {
+            break;
+          }
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+
+          document.getElementById("gameexplaition3").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition3").appendChild(image);
+        }
+
+        for (var i = 34; i < 24 + categories_vowel.length; i++) {
+          if (i == 39) {
+            break;
+          }
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+
+          document.getElementById("gameexplaition4").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition4").appendChild(image);
+        }
+
+        for (var i = 39; i < 24 + categories_vowel.length; i++) {
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '90px';
+          image.style.height = '90px';
+
+          document.getElementById("gameexplaition5").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition5").appendChild(image);
+        }
+      })
+
+      var Menu4 = document.createElement( 'button' );
+      Menu4.className = 'Menu4class';
+      var Menu4Text = document.createTextNode( '4.단어' );
+      Menu4.appendChild( Menu4Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu4 );
+
+    }
+
+
+</script>
 </body>
 </html>
