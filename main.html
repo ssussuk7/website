@@ -64,6 +64,10 @@
     <div id="gameexplaition3"></div>
     <div id="gameexplaition4"></div>
     <div id="gameexplaition5"></div>
+    <div id="gameexplaition6"></div>
+    <div id="gameexplaition7"></div>
+    <div id="gameexplaition8"></div>
+    <div id="gameexplaition9"></div>
     <div id="question_"></div>
     <div id="answer"></div>
   </div>
@@ -103,6 +107,42 @@
     var categories_number = ["0","1","2","3","4","5","6","7","8","9"];
     var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+    var categories_corona = ["코로나19","확진자","자가격리","사회적 거리두기","긴급 재난 지원금","선별 진료소","요양시설","생활방역"];
+
+
+    var corona_num = [1,2,3,2,4,3,3,3];
+
+    var corona = [
+    ["코로나19","1",
+    "1.오른손 다섯 손가락을 펼치고 그 사이에 왼손을 오므려 앞에 두고 원을 그리며 돌려준다."],
+    ["확진자","2",
+    "1.왼손은 엄지를 피고 앞으로 내민다. 왼손은 집게손가락을 위로 향하게 한다.",
+    "2.집게손가락을 구부려 왼손에 가져다 댄다"],
+    ["자가격리","3",
+    "1.오른손을 가슴에 두고 자신을 가르킨다",
+    "2.왼손과 오른손의 끝을 맞닿아 집을 표현한다",
+    "3.왼손 엄지를 가슴앞에 앞을 향해 내밀고 오른손 다섯손가락을 펼친 후 왼손을 감싼다"],
+    ["사회적 거리두기","2",
+    "1.왼손과 오른손의 집게손가락이 하늘을 향하게 한 후 떨어지게 둔다",
+    "2.두 손을 더 멀리 띄워 거리두는것을 표현한다."],
+    ["긴급 재난 지원금","4",
+    "1.왼손은 엄지를 제외한 네 손가락을 붙이고 앞을 향하게 한다. 오른손은 집게손가락을 이용해 왼손의 손바닥을 가르킨다.",
+    "2.왼손 네 손가락을 접고 오른손을 펼친다. 펼친 오른손은 왼손을 향해 가져다 댄다",
+    "3.왼손과 오른손의 엄지와 집게손가락을 이용해 원을 만든후. 두원을 몸 앞에 겹치게 둔다.",
+    "4.원을 만든 왼손과 오른손을 양 옆으로 펼친다."],
+    ["선별 진료소","3",
+    "1.오른손 집게손가락을 이용해 치아를 가르킨다.",
+    "2.왼손과 오른손을 이용해 집을 표현한다.",
+    "3.오른손을 구부려 마스크를 표현하고 얼굴앞에 원을 그린다."],
+    ["요양시설","3",
+    "1.왼손 집게손가락과 중지를 하늘로 향하게 둔다. 오른손을 펼처 왼손 손가락과 맞닿게 한다.",
+    "2.왼손과 오른손 다섯 손가락을 모아서 앞을 향하게 한다. 아래서 위로 올라오면서 집의 벽을 표현한다.",
+    "3.왼손과 오른손이 위에서 평행하여 만나서 천장을 표현한다."],
+    ["생활방역","3",
+    "1.왼손과 오른손의 중지와 집게 손가락을 이용해 V자 모양을 만들 원을 그린다.",
+    "2.왼손과 오른손이 주먹을 쥐고 오른손이 왼손의 팔목을 친다.",
+    "3.왼손을 펼치고 앞을 향하게 한 후 오른손 네 손가락을 모아서 왼손 손바닥에 댄다."]
+    ];
 
 
     var time = 180;
@@ -135,6 +175,10 @@
       document.getElementById("gameexplaition3").innerHTML = "";
       document.getElementById("gameexplaition4").innerHTML = "";
       document.getElementById("gameexplaition5").innerHTML = "";
+      document.getElementById("gameexplaition6").innerHTML = "";
+      document.getElementById("gameexplaition7").innerHTML = "";
+      document.getElementById("gameexplaition8").innerHTML = "";
+      document.getElementById("gameexplaition9").innerHTML = "";
 
 
 
@@ -170,6 +214,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number] + " 은 수화로 어떻게 표현할까요?");
@@ -208,6 +256,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
@@ -247,6 +299,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
@@ -285,6 +341,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
@@ -322,6 +382,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + " 은 수화로 어떻게 표현할까요?");
@@ -360,6 +424,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = (categories_All_id[Qus_number_plus] + "은 수화로 어떻게 표현할까요?");
@@ -400,6 +468,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         document.getElementById("gameexplaition2").innerHTML = ("문제 :"+ Qus_number1 + " + " + Qus_number2 + "=?" );
@@ -513,6 +585,10 @@
       document.getElementById("gameexplaition3").innerHTML = "3. 문제에 맞는 수화를 카메라에 입력하고 정확도가 85프로 이상이면 정답이 되고 점수가 1점 추가됩니다.";
       document.getElementById("gameexplaition4").innerHTML = "4. 다음 문제는 문제 종류 버튼을 한번 더 누르면 나옵니다.";
       document.getElementById("gameexplaition5").innerHTML = "5. 모르는 문제는 '문제정답'버튼을 누르게 되면 답이 나와있습니다. 하지만 다시 '게임시작'버튼을 누르게 되면 시간은 더 빨리 갑니다.";
+      document.getElementById("gameexplaition6").innerHTML = "";
+      document.getElementById("gameexplaition7").innerHTML = "";
+      document.getElementById("gameexplaition8").innerHTML = "";
+      document.getElementById("gameexplaition9").innerHTML = "";
     }
 
     //전체리셋
@@ -529,6 +605,10 @@
       document.getElementById("gameexplaition3").innerHTML = "";
       document.getElementById("gameexplaition4").innerHTML = "";
       document.getElementById("gameexplaition5").innerHTML = "";
+      document.getElementById("gameexplaition6").innerHTML = "";
+      document.getElementById("gameexplaition7").innerHTML = "";
+      document.getElementById("gameexplaition8").innerHTML = "";
+      document.getElementById("gameexplaition9").innerHTML = "";
 
       var Menu1 = document.createElement( 'button' );
       Menu1.className = 'Menu1class';
@@ -544,6 +624,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
 
         for (var i = 0; i < categories_number.length; i++) {
@@ -583,6 +667,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
         for (var i = 10; i < 10 + categories_consonant.length; i++) {
           if (i == 15) {
@@ -636,6 +724,10 @@
         document.getElementById("gameexplaition3").innerHTML = "";
         document.getElementById("gameexplaition4").innerHTML = "";
         document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
 
         for (var i = 24; i < 24 + categories_vowel.length; i++) {
           if (i == 29) {
@@ -696,6 +788,90 @@
       Menu4.appendChild( Menu4Text );
 
       document.getElementById("gameexplaition").appendChild( Menu4 );
+
+
+
+      var Menu5 = document.createElement( 'button' );
+      Menu5.className = 'Menu5class';
+      var Menu5Text = document.createTextNode( '5.코로나 관련 수어' );
+      Menu5.appendChild( Menu5Text );
+
+      document.getElementById("gameexplaition").appendChild( Menu5 );
+      Menu5.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
+
+        for (var i = 0; i < 3; i++) {
+          var num = i+2;
+          document.getElementById("gameexplaition" + num).append(categories_corona[i] + ".");
+
+          for (var j = 0; j < corona_num[i]; j++) {
+            var corona_url = "./image/" + categories_corona[i] + "/";
+
+            const image = new Image();
+            image.src = corona_url +j+ '.jpg';
+            image.style.width = '100px';
+            image.style.height = '100px';
+
+            document.getElementById("gameexplaition" + num).appendChild(image);
+          }
+        }
+
+        for (var i = 0; i < 2; i++) {
+          var num = i+2;
+          document.getElementById("gameexplaition" + num).append(categories_corona[i+3] + ".");
+
+          for (var j = 0; j < corona_num[i+3]; j++) {
+            var corona_url = "./image/" + categories_corona[i+3] + "/";
+
+            const image = new Image();
+            image.src = corona_url +j+ '.jpg';
+            image.style.width = '100px';
+            image.style.height = '100px';
+
+            document.getElementById("gameexplaition" + num).appendChild(image);
+          }
+        }
+
+        for (var i = 0; i < 2; i++) {
+          var num = i+4;
+          document.getElementById("gameexplaition" + num).append(categories_corona[i+5] + ".");
+
+          for (var j = 0; j < corona_num[i+5]; j++) {
+            var corona_url = "./image/" + categories_corona[i+5] + "/";
+
+            const image = new Image();
+            image.src = corona_url +j+ '.jpg';
+            image.style.width = '100px';
+            image.style.height = '100px';
+
+            document.getElementById("gameexplaition" + num).appendChild(image);
+          }
+        }
+
+        for (var i = 0; i < 1; i++) {
+          var num = i+5;
+          document.getElementById("gameexplaition" + num).append(categories_corona[i+7] + ".");
+
+          for (var j = 0; j < corona_num[i+7]; j++) {
+            var corona_url = "./image/" + categories_corona[i+7] + "/";
+
+            const image = new Image();
+            image.src = corona_url +j+ '.jpg';
+            image.style.width = '100px';
+            image.style.height = '100px';
+
+            document.getElementById("gameexplaition" + num).appendChild(image);
+          }
+        }
+
+      })
 
     }
 
