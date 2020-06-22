@@ -548,17 +548,24 @@
           document.getElementById("gameexplaition8").innerHTML = "";
           document.getElementById("gameexplaition9").innerHTML = "";
 
-          document.getElementById("gameexplaition2").innerHTML = ("다음은 수어 '" +categories_corona[rannum_action] + "'의 동작이다 '?'안에 돌어갈 동작은?");
+          document.getElementById("gameexplaition2").innerHTML = ("Q. 다음은 수어 '" +categories_corona[rannum_action] + "'의 동작이다 '?'안에 돌어갈 동작은?");
 
           for (var i = 0; i < corona_num[rannum_action]; i++) {
             var image = new Image();
             var exnum = i+4;
             var array_ex = i+2;
 
-
             image.src = './image/'+categories_corona[rannum_action] +'/' +i+ '.jpg';
+            if(rannum_action == 0){
+              image.src = './image/question_mark.jpg';
+            }
+
+            document.getElementById("gameexplaition" +exnum).append( corona[rannum_action][array_ex] );
+
             if(i == 1){
               image.src = './image/question_mark.jpg';
+              document.getElementById("gameexplaition" +exnum).innerHTML = "???";
+
             }
 
 
@@ -566,7 +573,8 @@
             image.style.height = '150px';
 
             document.getElementById("gameexplaition3").appendChild(image);
-            document.getElementById("gameexplaition" +exnum).append( corona[rannum_action][array_ex] );
+
+
 
 
           }
