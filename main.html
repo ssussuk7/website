@@ -556,11 +556,12 @@
             var array_ex = i+2;
 
             image.src = './image/'+categories_corona[rannum_action] +'/' +i+ '.jpg';
-            if(rannum_action == 0){
-              image.src = './image/question_mark.jpg';
-            }
 
             document.getElementById("gameexplaition" +exnum).append( corona[rannum_action][array_ex] );
+            if(rannum_action == 0){
+              image.src = './image/question_mark.jpg';
+              document.getElementById("gameexplaition" +exnum).innerHTML = "???";
+            }
 
             if(i == 1){
               image.src = './image/question_mark.jpg';
