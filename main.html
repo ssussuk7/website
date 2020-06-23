@@ -661,13 +661,14 @@
     if(prediction[rannum_action].probability.toFixed(2) * 100 > 85){
       webcam = false;
       Score = Score + 1
-      document.getElementById("gameexplaition4").innerHTML = "정답 !";
+      document.getElementById("gameexplaition4").innerHTML = "정답 ! /";
       const image = new Image();
       image.src = './image/' +Qus_number_plus+ '.jpg';
       image.style.width = '100px';
       image.style.height = '100px';
       document.getElementById("gameexplaition4").append(categories_All_id[Qus_number_plus] + ".")
       document.getElementById("gameexplaition4").appendChild(image);
+      document.getElementById("gameexplaition4").append(" Score:" + Score);
 
       document.getElementById("gameexplaition5").innerHTML = "";
       document.getElementById("gameexplaition6").innerHTML = "";
