@@ -99,14 +99,19 @@
 
     var categories_All = ["0","1","2","3","4","5","6","7","8","9",
               "10","11","12","13","14","15","16","17","18","19","20","21","22","23",
-              "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40"];
+              "24","25","26","27","28","29","30","31","32","33","34","35","36","37","38","39","40",
+              "41","42","43","44","45","46",
+              "47","48","49","50","51","52","53","54"];
     var categories_All_id = ["0","1","2","3","4","5","6","7","8","9",
                      "ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ",
-                     "ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+                     "ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ",
+                     "집","춥다","힘","밖","맹세","덩어리",
+                     "코로나19","확진자","자가격리","사회적 거리두기","긴급 재난 지원금","선별 진료소","요양시설","생활방역"];
 
     var categories_number = ["0","1","2","3","4","5","6","7","8","9"];
     var categories_consonant = ["ㄱ","ㄴ","ㄷ","ㄹ","ㅁ","ㅂ","ㅅ","ㅇ","ㅈ","ㅊ","ㅋ","ㅌ","ㅍ","ㅎ"];
     var categories_vowel = ["ㅏ","ㅑ","ㅓ","ㅕ","ㅗ","ㅛ","ㅜ","ㅠ","ㅡ","ㅣ","ㅐ","ㅒ","ㅔ","ㅖ","ㅚ","ㅟ","ㅢ"];
+    var categories_word = ["집","춥다","힘","밖","맹세","덩어리"];
     var categories_corona = ["코로나19","확진자","자가격리","사회적 거리두기","긴급 재난 지원금","선별 진료소","요양시설","생활방역"];
 
 
@@ -412,12 +417,12 @@
 
         document.getElementById("webcam-container").appendChild(webcam.canvas);
 
-        const modelURL_vow2 = URL + "model_vowel2.json";
-        const metadataURL_vow2 = URL + "metadata_vowel2.json";
+        const modelURL_word = URL + "model_word.json";
+        const metadataURL_word = URL + "metadata_word.json";
 
-        model = await tmImage.load(modelURL_vow2, metadataURL_vow2);
+        model = await tmImage.load(modelURL_word, metadataURL_word);
 
-        Qus_number = Math.floor(Math.random() * 10);
+        Qus_number = Math.floor(Math.random() * 5);
         Qus_number_plus = Qus_number + 41;
 
 
@@ -516,7 +521,7 @@
 
         var Menu8 = document.createElement( 'button' );
         Menu8.className = 'Menu8class';
-        var Menu8Text = document.createTextNode( '8.동작 맞추기(코로나 관련)' );
+        var Menu8Text = document.createTextNode( '8.동작퀴즈(코로나)' );
         Menu8.appendChild( Menu8Text );
 
         document.getElementById("gameexplaition").appendChild( Menu8 );
@@ -868,6 +873,27 @@
       Menu4.appendChild( Menu4Text );
 
       document.getElementById("gameexplaition").appendChild( Menu4 );
+      Menu4.addEventListener('click', function(event){
+        document.getElementById("gameexplaition2").innerHTML = "";
+        document.getElementById("gameexplaition3").innerHTML = "";
+        document.getElementById("gameexplaition4").innerHTML = "";
+        document.getElementById("gameexplaition5").innerHTML = "";
+        document.getElementById("gameexplaition6").innerHTML = "";
+        document.getElementById("gameexplaition7").innerHTML = "";
+        document.getElementById("gameexplaition8").innerHTML = "";
+        document.getElementById("gameexplaition9").innerHTML = "";
+
+        for (var i = 41; i < 41 + categories_word.length -1; i++) {
+
+          const image = new Image();
+          image.src = './image/' +i+ '.jpg';
+          image.style.width = '100px';
+          image.style.height = '100px';
+
+          document.getElementById("gameexplaition2").append(categories_All_id[i] + ".")
+          document.getElementById("gameexplaition2").appendChild(image);
+        }
+      })
 
 
 
